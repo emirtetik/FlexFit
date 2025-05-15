@@ -1,0 +1,32 @@
+@import "tailwindcss";
+@import "./styles/fonts.css";
+
+:root {
+  font-synthesis: none;
+  background-color: #0F1D26;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+@theme{
+  --font-bebas: Bebas, "sans-serif";
+  --font-mont: Mont, "sans-serif";
+  --font-mont-bold: MontBold, "sans-serif";
+  --font-mont-thin: MontThin, "sans-serif";
+  --font-mont-medium: MontMedium, "sans-serif";
+  --font-mont-semi: MontSemi, "sans-serif";
+  --font-mont-extrabold: MontExtraBold, "sans-serif";
+  --color-background: #0F1D26;
+  --color-primary: #2B414E;
+  --color-secondary: #53E38E;
+  --color-black: #030303;
+  --color-white: #FFFDF6;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  min-width: 320px;
+  min-height: 100vh;
+}
