@@ -1,5 +1,6 @@
 import { NavLink } from "react-router-dom";
-import { RiMenuUnfoldLine, RiMenuFoldLine } from "react-icons/ri";
+import { IoMenu } from "react-icons/io5";
+import { IoMdClose } from "react-icons/io";
 import classNames from "classnames";
 import { mainMenu } from "../../../constant/mainMenu";
 import Sidebar from "../sidebar";
@@ -16,7 +17,7 @@ const Menu: React.FC<MenuProps> = ({ isMenuOpen, setIsMenuOpen }) => {
 
   return (
     <>
-      <div className="hidden md:flex flex-grow justify-end ">
+      <div className="hidden md:flex flex-grow justify-end  ">
         {mainMenu.map((item, index) => (
           <NavLink key={index} to={item.path} className="mx-3">
             {({ isActive }) => (
@@ -35,11 +36,11 @@ const Menu: React.FC<MenuProps> = ({ isMenuOpen, setIsMenuOpen }) => {
 
       {/* sidebar button */}
       <div className="md:hidden ml-auto">
-        <button onClick={toggleMenu} aria-label="Toggle Menu">
+        <button onClick={toggleMenu} aria-label="Toggle Menu" className="cursor-pointer">
           {isMenuOpen ? (
-            <RiMenuUnfoldLine className="w-6 h-6 text-white" />
+            <IoMdClose className="w-6 h-6 text-white "  />
           ) : (
-            <RiMenuFoldLine className="w-6 h-6 text-white" />
+            <IoMenu className="w-6 h-6 text-white r" />
           )}
         </button>
       </div>

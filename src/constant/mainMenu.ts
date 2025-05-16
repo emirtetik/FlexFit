@@ -7,8 +7,4 @@ export const mainMenu = [
     path: "/favorites",
     title: "Favoriler",
   },
-  {
-    path: "/about",
-    title: "Hakkımda",
-  },
 ];

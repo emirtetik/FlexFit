@@ -1,9 +1,14 @@
+import Hero from "./_components/hero";
+import SectionOne from "./_components/section/sectionOne";
 
-const Home = () => {
+const HomePage = () => {
   return (
-   <div>
+    <div className="  ">
+
+      <Hero/>
+      <SectionOne/>
     </div>
   );
 };
 
-export default Home;
+export default HomePage
