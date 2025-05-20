@@ -1,4 +1,3 @@
-// routes.tsx
 import React from "react";
 import { createBrowserRouter } from "react-router-dom";
 import { Loading } from "../components/Loading";
@@ -7,6 +6,9 @@ const MainLayout = React.lazy(() => import("../components/Layout/main"));
 const NotFound = React.lazy(() => import("../pages/notFound"));
 const FavoritesPage = React.lazy(() => import("../pages/favorites"));
 const Home = React.lazy(() => import("../pages/home"));
+const ExercisesDetail = React.lazy(
+  () => import("../pages/detail/exercisesDetail")
+);
 
 const routes = createBrowserRouter([
   {
@@ -21,7 +23,15 @@ const routes = createBrowserRouter([
         index: true,
         element: (
           <React.Suspense fallback={<Loading />}>
-            <Home /> 
+            <Home />
+          </React.Suspense>
+        ),
+      },
+      {
+        path: "exercises/:name",
+        element: (
+          <React.Suspense fallback={<div>Loading...</div>}>
+            <ExercisesDetail />
           </React.Suspense>
         ),
       },

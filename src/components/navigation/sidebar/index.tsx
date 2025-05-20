@@ -1,6 +1,7 @@
 import { NavLink } from "react-router-dom";
 import classNames from "classnames";
 import { mainMenu } from "../../../constant/mainMenu";
+import Search from "../../Search";
 
 interface SidebarProps {
   isMenuOpen: boolean;
@@ -12,13 +13,16 @@ const Sidebar: React.FC<SidebarProps> = ({ isMenuOpen, setIsMenuOpen }) => {
     <>
       <div
         className={classNames(
-          "fixed top-0 left-0 h-full w-3/4 max-w-xs bg-red-700 z-50 transform transition-transform duration-500 ease-in-out md:hidden",
+          "fixed top-0 left-0 h-full w-3/4 max-w-xs bg-third z-50 transform transition-transform duration-500 ease-in-out md:hidden",
           {
             "-translate-x-full": !isMenuOpen,
             "translate-x-0": isMenuOpen,
           }
         )}
       >
+        <div className="w-full p-4 block md:hidden">
+          <Search />
+        </div>
         <div className="flex flex-col items-start gap-4 p-6 pt-16">
           {mainMenu.map((item, index) => (
             <NavLink

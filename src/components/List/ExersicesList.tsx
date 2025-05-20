@@ -1,47 +1,117 @@
-import { useState } from "react";
+import { useMemo } from "react";
+import {
+  FixedSizeList as List,
+  type ListChildComponentProps,
+} from "react-window";
 import { useExercises } from "../../hooks/useExercises";
-import { useExercisesByEquipment } from "../../hooks/useFilter";
-import type { Exercise } from "../../types";
 import ExerciseCard from "../Card/ExercisesCard";
 import { FilterBar } from "../Filter/FilterBar";
+import {
+  useExercisesByBodyPart,
+  useExercisesByEquipment,
+  useExercisesByTarget,
+} from "../../hooks/useFilter";
+import { Loading } from "../Loading";
+import type { Exercise } from "../../types";
+import React from "react";
+import { useFavorites } from "../../hooks/useFavorites";
+import { useWindowSize } from "../../hooks/useWindow";
 
-export const ExerciseList = () => {
-  const [filters, setFilters] = useState({
-    equipment: "",
-    target: "",
-    bodyPart: "",
-  });
+interface ExerciseListProps {
+  selectedTargets: string[];
+  selectedEquipments: string[];
+  selectedBodyParts: string[];
+  onFilterSelect: (
+    type: "target" | "equipment" | "bodyPart",
+    value: string
+  ) => void;
+}
 
-  const { data: allExercises = [], isLoading } = useExercises();
-  const { data: equipmentExercises } = useExercisesByEquipment(
-    filters.equipment
-  );
+const ExerciseList = React.memo(
+  ({
+    selectedTargets,
+    selectedEquipments,
+    selectedBodyParts,
+    onFilterSelect,
+  }: ExerciseListProps) => {
+    const targetQuery = useExercisesByTarget(selectedTargets[0]);
+    const equipmentQuery = useExercisesByEquipment(selectedEquipments[0]);
+    const bodyPartQuery = useExercisesByBodyPart(selectedBodyParts[0]);
+    const { isFavorite, toggleFavorite } = useFavorites();
+    const { data: allExercises, isLoading: isLoadingAll } = useExercises();
+const {width} = useWindowSize();
+const itemSize =
+  width < 418 ? 190 : width < 768 ? 120 : 140;
 
-  let filtered = filters.equipment ? equipmentExercises || [] : allExercises;
+    const activeQuery =
+      selectedTargets.length === 1
+        ? targetQuery
+        : selectedEquipments.length === 1
+        ? equipmentQuery
+        : selectedBodyParts.length === 1
+        ? bodyPartQuery
+        : null;
 
-  if (filters.target) {
-    filtered = filtered.filter((ex: Exercise) => ex.target === filters.target);
-  }
+    const data = activeQuery?.data ?? allExercises;
+    const isLoading = activeQuery?.isLoading || isLoadingAll;
 
-  if (filters.bodyPart) {
-    filtered = filtered.filter(
-      (ex: Exercise) => ex.bodyPart === filters.bodyPart
-    );
-  }
+    const filteredExercises = useMemo(() => {
+      if (!data) return [];
+      return data.filter((exercise: Exercise) => {
+        const targetMatch =
+          selectedTargets.length === 0 ||
+          selectedTargets.includes(exercise.target);
+        const equipmentMatch =
+          selectedEquipments.length === 0 ||
+          selectedEquipments.includes(exercise.equipment);
+        const bodyPartMatch =
+          selectedBodyParts.length === 0 ||
+          selectedBodyParts.includes(exercise.bodyPart);
+        return targetMatch && equipmentMatch && bodyPartMatch;
+      });
+    }, [data, selectedTargets, selectedEquipments, selectedBodyParts]);
 
+    if (isLoading) return <Loading />;
+    const Row = ({ index, style, data }: ListChildComponentProps) => {
+  const exercise = data[index];
   return (
-    <div>
-      <FilterBar filters={filters} onChange={setFilters} />
-
-      {isLoading ? (
-        <p>Yükleniyor...</p>
-      ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {filtered.map((exercise: Exercise) => (
-            <ExerciseCard key={exercise.id} {...exercise} />
-          ))}
-        </div>
-      )}
+    <div style={style} className="px-2">
+      <ExerciseCard
+        exercise={exercise}
+        isFavorite={isFavorite}
+        toggleFavorite={toggleFavorite}
+      />
     </div>
   );
 };
+    return (
+      <div className="flex flex-col md:flex-row gap-6">
+        <FilterBar
+          selectedTargets={selectedTargets}
+          selectedEquipments={selectedEquipments}
+          selectedBodyParts={selectedBodyParts}
+          onFilterSelect={onFilterSelect}
+        />
+
+        <div className="flex-1">
+          {isLoading && <Loading />}
+
+          {!isLoading && filteredExercises.length === 0 && <Loading />}
+
+          {!isLoading && (
+            <List
+              height={800}
+              itemCount={filteredExercises.length}
+              itemSize={itemSize}
+              width="100%"
+              itemData={filteredExercises}
+            >
+             {Row}
+            </List>
+          )}
+        </div>
+      </div>
+    );
+  }
+);
+export  default ExerciseList;

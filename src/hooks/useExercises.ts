@@ -8,9 +8,20 @@ export const useExercises = () =>
     staleTime: 1000 * 60 * 10,     
   });
 
-export const useExerciseById = (id: string) =>
+export const useTargets = () =>
   useQuery({
-    queryKey: ["exercises", "byId", id],
-    queryFn: () => ExercisesService.detail.byId(id),
-    enabled: !!id,
+    queryKey: ['exercises', 'targetList'],
+    queryFn: ExercisesService.list.targets,
+  });
+
+export const useEquipments = () =>
+  useQuery({
+    queryKey: ['exercises', 'equipmentList'],
+    queryFn: ExercisesService.list.equipment,
+  });
+
+export const useBodyParts = () =>
+  useQuery({
+    queryKey: ['exercises', 'bodyParts'],
+    queryFn: ExercisesService.list.bodyParts,
   });

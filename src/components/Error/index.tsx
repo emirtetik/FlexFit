@@ -12,7 +12,7 @@ export const Error = () => {
   };
 
   return (
-    <div className="fixed inset-0 z-[9999] flex items-center justify-center pointer-events-none">
+     <div className="flex items-center justify-center p-4 w-full pointer-events-none">
         <Lottie options={defaultOptions} height={128} width={128} />
     </div>
   );

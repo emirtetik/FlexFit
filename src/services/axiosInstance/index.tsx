@@ -9,7 +9,6 @@ interface Headers {
 interface InstanceProps extends AxiosRequestConfig {
   headers: Headers;
 }
-
 const axiosInstance: InstanceProps = {
   baseURL: API_URL,
   headers: {

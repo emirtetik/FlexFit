@@ -12,6 +12,9 @@ export const ExercisesService = {
     byEquipment: async (equipmentType: string) =>
       BaseService.get(`exercises/equipment/${encodeURIComponent(equipmentType)}`),
 
+    byBodyPart: async (bodyType: string) =>
+      BaseService.get(`exercises/bodyPart/${encodeURIComponent(bodyType)}`),
+
     byTarget: async (target: string) =>
       BaseService.get(`exercises/target/${encodeURIComponent(target)}`),
 

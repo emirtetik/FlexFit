@@ -1,61 +1,76 @@
-import { useBodyParts } from "../../hooks/useBodyParts";
-import { useEquipments } from "../../hooks/useEquipment";
-import { useTargets } from "../../hooks/useTargets";
+import { useState } from "react";
+import {
+  useBodyParts,
+  useEquipments,
+  useTargets,
+} from "../../hooks/useExercises";
+import { SearchInput } from "../Search/SearchInput";
+import { FilterGroup } from "./FilterGroup";
 
-type FilterBarProps = {
-  filters: {
-    equipment: string;
-    target: string;
-    bodyPart: string;
-  };
-  onChange: (filters: { equipment: string; target: string; bodyPart: string }) => void;
-};
+interface FilterBarProps {
+  selectedTargets: string[];
+  selectedEquipments: string[];
+  selectedBodyParts: string[];
+  onFilterSelect: (
+    type: "target" | "equipment" | "bodyPart",
+    value: string
+  ) => void;
+}
 
-export const FilterBar = ({ filters, onChange }: FilterBarProps) => {
-  const { data: equipments } = useEquipments();
+export const FilterBar: React.FC<FilterBarProps> = ({
+  selectedTargets,
+  selectedEquipments,
+  selectedBodyParts,
+  onFilterSelect,
+}) => {
   const { data: targets } = useTargets();
+  const { data: equipments } = useEquipments();
   const { data: bodyParts } = useBodyParts();
+  const [openGroups, setOpenGroups] = useState<Record<string, boolean>>({});
+  const [searchTerm, setSearchTerm] = useState("");
 
+  const filterList = (list: string[] | undefined) =>
+    list?.filter((item) =>
+      item.toLowerCase().includes(searchTerm.toLowerCase())
+    ) || [];
+  const toggleGroup = (key: string) => {
+    setOpenGroups((prev) => ({ ...prev, [key]: !prev[key] }));
+  };
   return (
-    <div className="flex flex-col md:flex-row gap-4 mb-6">
-      <select
-        value={filters.equipment}
-        onChange={(e) => onChange({ ...filters, equipment: e.target.value })}
-        className="p-2 border rounded"
-      >
-        <option value="">Tüm Ekipmanlar</option>
-        {equipments?.map((eq: string) => (
-          <option key={eq} value={eq}>
-            {eq}
-          </option>
-        ))}
-      </select>
+      <div className="p-2 md:p-4 bg-transparent border border-primary rounded-xl space-y-4 w-full md:max-w-xs ">
 
-      <select
-        value={filters.bodyPart}
-        onChange={(e) => onChange({ ...filters, bodyPart: e.target.value })}
-        className="p-2 border rounded"
-      >
-        <option value="">Tüm Kas Grupları</option>
-        {bodyParts?.map((bp: string) => (
-          <option key={bp} value={bp}>
-            {bp}
-          </option>
-        ))}
-      </select>
+      <SearchInput
+        name="search"
+        placeholder="Filtrele..."
+        onSearch={setSearchTerm}
+      />
 
-      <select
-        value={filters.target}
-        onChange={(e) => onChange({ ...filters, target: e.target.value })}
-        className="p-2 border rounded"
-      >
-        <option value="">Tüm Hedefler</option>
-        {targets?.map((target: string) => (
-          <option key={target} value={target}>
-            {target}
-          </option>
-        ))}
-      </select>
+      <FilterGroup
+        title="Muscle Group"
+        options={filterList(targets)}
+        selected={selectedTargets}
+        isOpen={openGroups["target"]}
+        onToggleOpen={() => toggleGroup("target")}
+        onToggle={(val) => onFilterSelect("target", val)}
+      />
+
+      <FilterGroup
+        title="Equipment Group"
+        options={filterList(equipments)}
+        selected={selectedEquipments}
+        isOpen={openGroups["equipment"]}
+        onToggleOpen={() => toggleGroup("equipment")}
+        onToggle={(val) => onFilterSelect("equipment", val)}
+      />
+
+      <FilterGroup
+        title="Body Group"
+        options={filterList(bodyParts)}
+        selected={selectedBodyParts}
+        isOpen={openGroups["bodyPart"]}
+        onToggleOpen={() => toggleGroup("bodyPart")}
+        onToggle={(val) => onFilterSelect("bodyPart", val)}
+      />
     </div>
   );
 };

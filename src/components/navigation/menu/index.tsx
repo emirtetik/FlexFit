@@ -4,6 +4,7 @@ import { IoMdClose } from "react-icons/io";
 import classNames from "classnames";
 import { mainMenu } from "../../../constant/mainMenu";
 import Sidebar from "../sidebar";
+import Button from "../../ui/Button";
 
 interface MenuProps {
   isMenuOpen: boolean;
@@ -34,15 +35,18 @@ const Menu: React.FC<MenuProps> = ({ isMenuOpen, setIsMenuOpen }) => {
         ))}
       </div>
 
-      {/* sidebar button */}
-      <div className="md:hidden ml-auto">
-        <button onClick={toggleMenu} aria-label="Toggle Menu" className="cursor-pointer">
+      <div className="md:hidden md:ml-auto ml-0">
+        <Button
+          onClick={toggleMenu}
+          variant="ghost"
+          className="cursor-pointer"
+        >
           {isMenuOpen ? (
-            <IoMdClose className="w-6 h-6 text-white "  />
+            <IoMdClose className="w-6 h-6 text-white" />
           ) : (
-            <IoMenu className="w-6 h-6 text-white r" />
+            <IoMenu className="w-6 h-6 text-white" />
           )}
-        </button>
+        </Button>
       </div>
       <Sidebar isMenuOpen={isMenuOpen} setIsMenuOpen={setIsMenuOpen} />
     </>

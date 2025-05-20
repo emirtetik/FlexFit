@@ -1,3 +1,4 @@
+import { showError } from "../lib/toastify";
 import instance from "./axiosInstance" 
 
 export const BaseService = {
@@ -7,7 +8,7 @@ export const BaseService = {
       return response.data;
     } catch (error) {
       if (error) {
-        console.log('İstek iptal edildi');
+        showError('İstek iptal edildi');
       } else {
         throw error;
       } 
