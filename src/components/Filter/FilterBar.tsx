@@ -6,6 +6,7 @@ import {
 } from "../../hooks/useExercises";
 import { SearchInput } from "../Search/SearchInput";
 import { FilterGroup } from "./FilterGroup";
+import { showError } from "../../lib/toastify";
 
 interface FilterBarProps {
   selectedTargets: string[];
@@ -23,11 +24,22 @@ export const FilterBar: React.FC<FilterBarProps> = ({
   selectedBodyParts,
   onFilterSelect,
 }) => {
-  const { data: targets } = useTargets();
-  const { data: equipments } = useEquipments();
-  const { data: bodyParts } = useBodyParts();
+  const { data: targets, error: errorTargets } = useTargets();
+  const { data: equipments, error: errorEquipment } = useEquipments();
+  const { data: bodyParts, error: errorBody } = useBodyParts();
   const [openGroups, setOpenGroups] = useState<Record<string, boolean>>({});
   const [searchTerm, setSearchTerm] = useState("");
+
+   if (errorTargets || errorBody || errorEquipment) {
+  const error = errorTargets || errorBody || errorEquipment;
+
+  const message =  
+    error instanceof Error
+      ? error.message
+      : "Egzersizler yüklenirken bir hata oluştu.";
+
+  showError(message);
+}
 
   const filterList = (list: string[] | undefined) =>
     list?.filter((item) =>

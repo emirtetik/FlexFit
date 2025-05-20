@@ -8,7 +8,7 @@ export const BaseService = {
       return response.data;
     } catch (error) {
       if (error) {
-        showError('İstek iptal edildi');
+        showError('İsteğiniz başarısız oldu.');
       } else {
         throw error;
       } 

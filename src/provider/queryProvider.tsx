@@ -1,13 +1,14 @@
 import { QueryClient, QueryClientProvider, QueryCache } from '@tanstack/react-query';
 import type { ReactNode } from 'react';
+import { showError } from '../lib/toastify';
 
 interface Props {
   children: ReactNode;
 }
 
 const queryCache = new QueryCache({
-  onError: (error, query) => {
-    console.error('Global query error:', error, 'Query:', query.queryKey);
+  onError: (error) => {
+    showError(error instanceof Error ? error.message : "Beklenmeyen bir hata oluştu.");
   },
   onSuccess: (data, query) => {
     console.log('Global query success:', data, 'Query:', query.queryKey);
