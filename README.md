@@ -1,54 +1,55 @@
-# React + TypeScript + Vite
+# FlexFit
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+**FlexFit**, kullanıcıların kas grubuna göre egzersizleri keşfedebileceği, her egzersize ait detay bilgilerin sunulduğu ve görsel destekli bir **egzersiz rehberi uygulamasıdır**. Uygulama; **Vite**, **React**, **TypeScript**, **Tailwind CSS**, **Framer Motion**, **React Query**, **Formik & Yup** gibi modern teknolojiler kullanılarak geliştirilmiştir.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Proje Amacı
 
-## Expanding the ESLint configuration
+- Kullanıcılara kas grubuna göre filtrelenebilir egzersizleri sunmak
+- Her egzersiz için isim, hedef kas grubu, ekipman bilgisi ve GIF görseli göstermek
+- Arama formu ile egzersizleri kolayca bulma
+- Beğenilen egzersizleri **favorilere** ekleyip `localStorage` ile saklamak
+- API üzerinden veri çekimi ve önbellekleme işlemlerini verimli şekilde gerçekleştirmek
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+---
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+## Kullanılan Teknolojiler & Kütüphaneler
+
+- **React** – Modern UI bileşen mimarisi  
+- **Vite** – Hızlı geliştirme ve derleme aracı  
+- **Typescript** – Tip güvenliği ile daha sağlam JavaScript geliştirme  
+- **Tailwind CSS** – Utility-first CSS framework  
+- **Framer Motion** – Etkileyici ve pürüzsüz animasyonlar  
+- **React Router DOM** – Sayfa yönlendirme ve gezinme  
+- **React Icons** – Popüler ikon kütüphanesi  
+- **React Toastify** – Bildirim yönetim sistemi  
+- **React Helmet** – SEO ve meta etiket yönetimi  
+- **TanStack Query (React Query)** – Veri fetch işlemleri ve cache yönetimi  
+- **Formik & Yup** – Form yönetimi ve doğrulama  
+- **React Lottie** – JSON animasyon desteği  
+- **React Window** – Performanslı liste render'ı  
+- **React Use** – Custom hook koleksiyonu  
+- **Axios** – HTTP istekleri için istemci kütüphanesi  
+
+---
+
+## Projeyi Kurmak ve Çalıştırmak
+
+```bash
+1. git clone https://github.com/emirtetik/FlexFit.git
+2. cd FlexFit
+3. npm install
+4. Ortam değişkenleri için `.env` dosyası oluşturun
+
+# (.env içerisine API_KEY ve API_URL değişkenlerini ekleyin)
+# VITE_API_URL=https://exercisedb.p.rapidapi.com/
+# VITE_API_KEY=3a52c61e9bmsh08dbab9949209f6p157065jsncb6e535e9d01
+
+5.npm run dev
+
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
-```
+![FlexFit](./public/flexFit.png)
+![FlexFit](./public/filter1.png)
+![FlexFit](./public/filter2.png)

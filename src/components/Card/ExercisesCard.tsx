@@ -27,7 +27,7 @@ const ExerciseCard: FC<Props> = ({ exercise, isFavorite, toggleFavorite }) => {
             loading="lazy"
           />
           <div className="p-4 flex flex-col justify-center">
-            <h3 className="text-[9px] md:text-base font-mont-semi mb-2 text-white capitalize">{name}</h3>
+            <h3 className="text-[9px] md:text-sm font-mont-semi mb-2 text-white capitalize max-w-[180px]">{name}</h3>
             <p className="text-white text-[9px] md:text-xs mb-1 font-mont-medium">
               <span className="text-gray-400">Hedef:</span> {target}
             </p>
