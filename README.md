@@ -14,6 +14,15 @@
 
 ---
 
+## Geliştirici Notları
+
+- Uygulama genel hatlarıyla sorunsuz çalışmaktadır. API'den gelen egzersiz verileri başarıyla filtrelenmekte ve gösterilmektedir.
+- İlk filtreleme sonrası egzersiz listesi bileşeninde (ExercisesList.tsx) yeniden render oluşmasını tam olarak engelleyemedim. Bu durum yalnızca ilk filtreleme etkileşiminde oluşmakta, sonraki filtrelemeler beklendiği gibi 
+  çalışmaktadır.
+- Bu problemi çözmek için React.memo, useMemo ve useCallback gibi optimizasyon teknikleri denendi ancak tam çözüm sağlanamadı.
+
+---
+
 ## Kullanılan Teknolojiler & Kütüphaneler
 
 - **React** – Modern UI bileşen mimarisi  
