@@ -1,7 +1,7 @@
 import { useState } from "react";
-import Logo from "../../Logo";
-import Menu from "../menu";
-import Search from "../../Search";
+import Logo from "../Logo";
+import Search from "../Search";
+import Menu from "./menu";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
