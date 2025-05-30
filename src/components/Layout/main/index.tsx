@@ -1,6 +1,6 @@
 import { Outlet } from "react-router-dom";
-import Header from "../../Navigation/header";
-import Footer from "../../Navigation/footer";
+import Header from "../../Navigation/Header";
+import Footer from "../../Navigation/Footer";
 const MainLayout = () => {
   return (
     <div className="flex flex-col min-h-screen ">
